@@ -35,14 +35,17 @@ jobs:
         cache: 'poetry'
 
     - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.7.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
 
-    - name: Configure Poetry
+    - name: Debug Poetry Installation
       run: |
-        poetry config virtualenvs.in-project true
-        poetry config virtualenvs.create true
+        which poetry
+        poetry --version
+        echo "PATH=$PATH"
 
     - name: Load cached venv
       id: cached-poetry-dependencies
@@ -88,14 +91,17 @@ jobs:
         cache: 'poetry'
 
     - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.7.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
 
-    - name: Configure Poetry
+    - name: Debug Poetry Installation
       run: |
-        poetry config virtualenvs.in-project true
-        poetry config virtualenvs.create true
+        which poetry
+        poetry --version
+        echo "PATH=$PATH"
 
     - name: Install dependencies
       run: poetry install --no-interaction
@@ -119,14 +125,17 @@ jobs:
         cache: 'poetry'
 
     - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.7.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
 
-    - name: Configure Poetry
+    - name: Debug Poetry Installation
       run: |
-        poetry config virtualenvs.in-project true
-        poetry config virtualenvs.create true
+        which poetry
+        poetry --version
+        echo "PATH=$PATH"
 
     - name: Install dependencies
       run: poetry install --no-interaction
@@ -150,14 +159,17 @@ jobs:
         cache: 'poetry'
 
     - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.7.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
 
-    - name: Configure Poetry
+    - name: Debug Poetry Installation
       run: |
-        poetry config virtualenvs.in-project true
-        poetry config virtualenvs.create true
+        which poetry
+        poetry --version
+        echo "PATH=$PATH"
 
     - name: Build package
       run: poetry build
