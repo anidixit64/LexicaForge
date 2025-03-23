@@ -1,7 +1,6 @@
 """Logging configuration for LexicaForge.
 
 This module provides a standardized logging configuration for the entire application.
-It uses structlog for structured logging and configures both console and file handlers.
 """
 
 import logging
@@ -12,7 +11,6 @@ from typing import Optional
 import structlog
 from structlog.types import Processor
 
-# Configure structlog processors
 def setup_structlog_processors() -> list[Processor]:
     """Set up the processors for structlog configuration.
     
