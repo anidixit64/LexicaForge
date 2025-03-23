@@ -31,6 +31,16 @@ pytest-cov = "^4.1.0"
 pre-commit = "^3.5.0"
 bandit = "^1.7.5"
 flake8-docstrings = "^1.7.0"
+pytest-asyncio = "^0.21.1"
+pytest-mock = "^3.12.0"
+pytest-xdist = "^3.3.1"
+pytest-benchmark = "^4.0.0"
+pytest-randomly = "^3.15.0"
+pytest-env = "^1.1.1"
+pytest-sugar = "^0.9.7"
+pytest-timeout = "^2.2.0"
+coverage = "^7.4.0"
+hypothesis = "^6.87.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -61,4 +71,35 @@ warn_unreachable = true
 
 [tool.bandit]
 exclude_dirs = ["tests"]
-skips = ["B101"] 
+skips = ["B101"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = """
+    --verbose
+    --cov=lexicaforge
+    --cov-report=term-missing
+    --cov-report=html
+    --cov-fail-under=80
+    --no-cov-on-fail
+    --asyncio-mode=auto
+    --strict-markers
+    --benchmark-only
+    --benchmark-group-by=func
+    --benchmark-warmup=on
+    --benchmark-warmup-iterations=1000
+    --benchmark-min-rounds=100
+"""
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "e2e: End-to-end tests",
+    "slow: Tests that take longer to run",
+    "api: API-specific tests",
+    "db: Database-specific tests",
+    "nlp: NLP-specific tests",
+    "rust: Rust integration tests",
+] 
