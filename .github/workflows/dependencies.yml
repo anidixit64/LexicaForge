@@ -1,0 +1,45 @@
+name: Dependencies
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly on Sunday
+
+jobs:
+  update:
+    name: Update dependencies
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        cache: 'poetry'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Update dependencies
+      run: |
+        poetry update
+        poetry export -f requirements.txt --output requirements.txt --without-hashes
+        poetry export -f requirements.txt --output requirements-dev.txt --with dev --without-hashes
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: 'chore: update dependencies'
+        title: 'chore: update dependencies'
+        body: |
+          Automated dependency update.
+          
+          This PR updates the project dependencies to their latest versions.
+          
+          Please review the changes and ensure they don't break any functionality.
+        branch: update-dependencies
+        delete-branch: true
+        labels: |
+          dependencies
+          automated pr 
