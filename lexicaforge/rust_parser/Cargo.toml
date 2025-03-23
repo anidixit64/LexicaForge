@@ -1,0 +1,17 @@
+[package]
+name = "lexicaforge-parser"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "lexicaforge_parser"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.19", features = ["extension-module"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+regex = "1.9"
+lazy_static = "1.4"
+rayon = "1.7"  # For parallel processing
+thiserror = "1.0"  # For error handling 
