@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "lexicaforge"
+version = "0.1.0"
+description = "Etymology and Cognate Graph API with advanced linguistic analysis"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.104.0"
+strawberry-graphql = "^0.211.1"
+sqlalchemy = "^2.0.23"
+alembic = "^1.12.1"
+psycopg2-binary = "^2.9.9"
+pyspark = "^3.5.0"
+dagster = "^1.5.13"
+pytest = "^7.4.3"
+httpx = "^0.25.1"
+python-dotenv = "^1.0.0"
+uvicorn = "^0.24.0"
+networkx = "^3.2.1"
+spacy = "^3.7.2"
+nltk = "^3.8.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.10.1"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+mypy = "^1.6.1"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3 
