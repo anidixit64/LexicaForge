@@ -1,51 +1,33 @@
-name: CI/CD
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
   test:
-    name: Test
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: lexicaforge_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: ${{ matrix.python-version }}
         cache: 'poetry'
 
     - name: Install Poetry
       uses: snok/install-poetry@v1
       with:
-        version: 1.7.1
+        version: latest
         virtualenvs-create: true
         virtualenvs-in-project: true
-
-    - name: Debug Poetry Installation
-      run: |
-        which poetry
-        poetry --version
-        echo "PATH=$PATH"
 
     - name: Load cached venv
       id: cached-poetry-dependencies
@@ -58,25 +40,44 @@ jobs:
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --no-root
 
-    - name: Install project
-      run: poetry install --no-interaction
-
-    - name: Run pre-commit hooks
-      run: poetry run pre-commit run --all-files
-
-    - name: Run tests with coverage
-      env:
-        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lexicaforge_test
-        PYTHONPATH: ${{ github.workspace }}
-        LOG_LEVEL: DEBUG
-      run: |
-        poetry run pytest --cov=lexicaforge --cov-report=xml -v
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Set up Java
+      uses: actions/setup-java@v3
       with:
-        file: ./coverage.xml
-        fail_ci_if_error: true
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        coverage: none
+        tools: composer
+
+    - name: Install PHP dependencies
+      run: composer install --no-interaction
+
+    - name: Run Python tests
+      run: poetry run pytest tests/nlp/test_lexicaforge.py -v
+
+    - name: Run Java tests
+      run: mvn test
+
+    - name: Run PHP tests
+      run: ./vendor/bin/phpunit
+
+    - name: Run Node.js tests
+      run: |
+        npm install
+        npm test
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-reports
+        path: |
+          target/site/jacoco/
+          coverage/
+          .coverage
 
   lint:
     name: Lint
