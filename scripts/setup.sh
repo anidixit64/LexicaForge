@@ -5,15 +5,15 @@ set -e
 
 echo "Setting up development environment..."
 
-# Install Poetry if not present
-if ! command -v poetry &> /dev/null; then
-    echo "Installing Poetry..."
-    curl -sSL https://install.python-poetry.org | python3 -
-fi
+# Create and activate virtual environment
+echo "Creating Python virtual environment..."
+python3 -m venv venv
+source venv/bin/activate
 
 # Install Python dependencies
 echo "Installing Python dependencies..."
-poetry install
+pip install --upgrade pip
+pip install -r requirements.txt
 
 # Install Node.js dependencies
 echo "Installing Node.js dependencies..."
@@ -36,7 +36,10 @@ fi
 mvn install
 
 echo "Setup complete! You can now run:"
-echo "  - Python tests: poetry run pytest"
+echo "  - Python tests: pytest"
 echo "  - Node.js tests: npm test"
 echo "  - PHP tests: ./vendor/bin/phpunit"
-echo "  - Java tests: mvn test" 
+echo "  - Java tests: mvn test"
+echo ""
+echo "To activate the Python virtual environment, run:"
+echo "  source venv/bin/activate" 
