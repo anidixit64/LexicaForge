@@ -31,7 +31,7 @@ class Word(Base):
     definition = Column(String(500))
     
     language = relationship("Language", back_populates="words")
-    etymologies = relationship("Etymology", back_populates="word")
+    etymologies = relationship("EtymologyModel", back_populates="word")
     cognates = relationship(
         "Word",
         secondary="cognate_relationship",
@@ -40,16 +40,16 @@ class Word(Base):
     )
 
 
-class Etymology(Base):
-    """Model for etymological relationships."""
-    word_id = Column(Integer, ForeignKey("word.id"), nullable=False)
-    ancestor_id = Column(Integer, ForeignKey("word.id"), nullable=True)
-    relationship_type = Column(String(50), nullable=False)  # e.g., "derived", "borrowed", "inherited"
-    confidence_score = Column(Integer)  # 0-100
-    notes = Column(String(500))
-    
-    word = relationship("Word", back_populates="etymologies", foreign_keys=[word_id])
-    ancestor = relationship("Word", foreign_keys=[ancestor_id])
+class EtymologyModel(Base):
+    __tablename__ = 'etymologies'
+
+    id = Column(Integer, primary_key=True)
+    word_id = Column(Integer, ForeignKey('words.id'))
+    language = Column(String)
+    meaning = Column(String)
+    notes = Column(String)
+
+    word = relationship("Word", back_populates="etymologies")
 
 
 # Association table for cognate relationships

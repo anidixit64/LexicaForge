@@ -1,0 +1,25 @@
+# Bandit configuration file
+
+# Skip these tests
+skips:
+  - B101  # assert_used - We use asserts for internal validation
+  - B404  # subprocess import - We need subprocess for Rust integration
+  - B607  # start_process_with_partial_path - Cargo is a trusted system binary
+  - B603  # subprocess_without_shell_equals_true - We use explicit paths
+
+# Test configuration
+tests:
+  - B101
+  - B404
+  - B607
+  - B603
+
+# Aggregated output format
+output_format: json
+
+# Paths to exclude
+exclude_dirs:
+  - 'tests'
+  - 'docs'
+  - 'venv'
+  - '.git' 

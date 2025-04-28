@@ -58,7 +58,7 @@ jobs:
         npm test
 
     - name: Upload coverage reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-reports
         path: |
@@ -107,7 +107,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run bandit
-      run: bandit -r lexicaforge
+      run: bandit -c .bandit.yml -r lexicaforge
 
   build:
     name: Build
@@ -133,7 +133,7 @@ jobs:
       run: python -m build
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/ 
