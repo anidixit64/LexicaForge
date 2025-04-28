@@ -1,0 +1,52 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run Tests",
+            "program": "${workspaceFolder}/tests/runner.js",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "env": {
+                "DEBUG": "true"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Java Tests",
+            "program": "${workspaceFolder}/tests/runner.js",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "env": {
+                "DEBUG": "true",
+                "TEST_LANG": "java"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug PHP Tests",
+            "program": "${workspaceFolder}/tests/runner.js",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "env": {
+                "DEBUG": "true",
+                "TEST_LANG": "php"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Python Tests",
+            "program": "${workspaceFolder}/tests/runner.js",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "env": {
+                "DEBUG": "true",
+                "TEST_LANG": "python"
+            }
+        }
+    ]
+} 

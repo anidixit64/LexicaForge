@@ -1,0 +1,22 @@
+{
+  "name": "lexicaforge-tests",
+  "version": "1.0.0",
+  "description": "Test runner for LexicaForge NLP toolkit",
+  "main": "tests/runner.js",
+  "scripts": {
+    "test": "node tests/runner.js",
+    "test:java": "mvn test",
+    "test:php": "./vendor/bin/phpunit",
+    "test:python": "pytest tests/nlp/test_lexicaforge.py -v",
+    "test:debug": "DEBUG=true node tests/runner.js",
+    "test:coverage": "node tests/runner.js --coverage"
+  },
+  "dependencies": {
+    "mocha": "^10.0.0",
+    "chai": "^4.3.6",
+    "nyc": "^15.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+} 
